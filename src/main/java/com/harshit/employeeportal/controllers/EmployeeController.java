@@ -5,12 +5,11 @@ import com.harshit.employeeportal.beans.ResponseBean;
 import com.harshit.employeeportal.services.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 
 @RestController
@@ -27,9 +26,14 @@ public class EmployeeController {
             @RequestBody Employee employee
     ) {
         if (employeeService.addEmployee(employee)) {
-            return ResponseEntity.of(Optional.of(new ResponseBean(HttpStatus.CREATED, null)));
+            return ResponseEntity.ok(new ResponseBean(HttpStatus.CREATED, null));
         } else {
-            return ResponseEntity.of(Optional.of(new ResponseBean(HttpStatus.BAD_REQUEST, null)));
+            return ResponseEntity.ok(new ResponseBean(HttpStatus.BAD_REQUEST, null));
         }
+    }
+
+    @GetMapping(value = "/getall")
+    public ResponseEntity<ResponseBean> getAllEmployees() {
+        return ResponseEntity.ok(new ResponseBean(HttpStatus.OK, employeeService.getAllEmployees()));
     }
 }
