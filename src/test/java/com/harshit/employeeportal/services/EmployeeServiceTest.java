@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -55,7 +56,9 @@ class EmployeeServiceTest {
     @DisplayName("Should not add Employee to the database")
     void addEmployeeTestForValidation() {
         when(employeeRepository.save(any(Employee.class))).thenThrow(ConstraintViolationException.class);
-        assertThat(employeeService.addEmployee(employee)).isFalse();
+        assertThrows(ConstraintViolationException.class, () -> {
+            employeeService.addEmployee(employee);
+        });
     }
 
     @Test
