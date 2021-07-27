@@ -2,7 +2,6 @@ package com.harshit.employeeportal.services;
 
 import com.harshit.employeeportal.beans.Employee;
 import com.harshit.employeeportal.repositories.EmployeeRepository;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -19,12 +18,7 @@ public class EmployeeService {
     }
 
     public boolean addEmployee(Employee employee) {
-        try {
-            employeeRepository.save(employee);
-        } catch (ConstraintViolationException e) {
-            e.printStackTrace();
-            return false;
-        }
+        employeeRepository.save(employee);
         return true;
     }
 
